@@ -1,4 +1,4 @@
-package com.ShopBookPTD.ShopBookPTD;
+package com.BookStorePTD.BookStorePTD;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

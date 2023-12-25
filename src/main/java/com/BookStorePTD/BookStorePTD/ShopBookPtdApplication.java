@@ -1,4 +1,4 @@
-package com.ShopBookPTD.ShopBookPTD;
+package com.BookStorePTD.BookStorePTD;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

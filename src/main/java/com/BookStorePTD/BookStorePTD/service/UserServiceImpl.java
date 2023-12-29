@@ -46,6 +46,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteById(Long id) {
-      userRepository.deleteById(id);
+        Optional<User> optionalUser= userRepository.findById(id);
+        if(optionalUser.isPresent()){
+            userRepository.deleteById(id);
+        }else{
+            throw new NotFoundException("Quá trình xóa User có id "+ id+" không thành công !");
+        }
+
     }
 }

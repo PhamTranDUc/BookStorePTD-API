@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ShopBookPtdApplication {
 
 	public static void main(String[] args) {
-		System.setProperty("server.error.include-stacktrace", "never");
 		SpringApplication.run(ShopBookPtdApplication.class, args);
 	}
 

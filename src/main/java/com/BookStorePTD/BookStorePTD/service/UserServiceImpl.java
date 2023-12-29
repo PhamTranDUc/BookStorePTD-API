@@ -2,6 +2,7 @@ package com.BookStorePTD.BookStorePTD.service;
 
 import com.BookStorePTD.BookStorePTD.dto.UserDto;
 import com.BookStorePTD.BookStorePTD.entity.User;
+import com.BookStorePTD.BookStorePTD.exception.NotFoundException;
 import com.BookStorePTD.BookStorePTD.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,9 +27,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto getById(Long id) {
-        Optional<User> userOptional= userRepository.findById(id);
-        return new UserDto(userOptional.get());
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            return new UserDto(userOptional.get());
+        }
+         else {
+            throw new NotFoundException("Không tìm thấy User phù hợp !");
+        }
+//        return new UserDto(userOptional.get());
     }
+
 
     @Override
     public void save(User user) {
@@ -38,6 +46,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteById(Long id) {
-      userRepository.deleteById(id);
+        Optional<User> optionalUser= userRepository.findById(id);
+        if(optionalUser.isPresent()){
+            userRepository.deleteById(id);
+        }else{
+            throw new NotFoundException("Quá trình xóa User có id "+ id+" không thành công !");
+        }
+
     }
 }

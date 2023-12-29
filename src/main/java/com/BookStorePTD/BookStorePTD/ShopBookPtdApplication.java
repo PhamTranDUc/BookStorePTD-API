@@ -10,4 +10,5 @@ public class ShopBookPtdApplication {
 		SpringApplication.run(ShopBookPtdApplication.class, args);
 	}
 
+
 }

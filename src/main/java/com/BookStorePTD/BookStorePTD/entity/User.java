@@ -35,4 +35,14 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name= "role")
+    private String role;
+
+    @Column(name="image")
+    private String image;
+
+    @PrePersist
+    void prePersist() {
+        if (this.role == null) this.role = "USER";
+    }
 }

@@ -1,46 +1,38 @@
 package com.BookStorePTD.BookStorePTD.controller;
 
 import com.BookStorePTD.BookStorePTD.dto.UserDto;
-import com.BookStorePTD.BookStorePTD.entity.User;
-import com.BookStorePTD.BookStorePTD.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.BookStorePTD.BookStorePTD.dto.UserLoginDto;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController()
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-    @GetMapping("")
-    public ResponseEntity<?> getAll(){
-        List<UserDto> listRs= userService.findAll();
-        return ResponseEntity.ok(listRs);
-    }
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id){
-        UserDto user= userService.getById(id);
-        return ResponseEntity.ok(user);
-    }
-
-    @PostMapping("")
-    public ResponseEntity<?> saveUser(@RequestBody User user){
-        userService.save(user);
-        return ResponseEntity.ok(user);
+    @PostMapping("/register")
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserDto user, BindingResult result){
+        try {
+            if(result.hasErrors()){
+                List<String> errorMessages= result.getFieldErrors()
+                        .stream()
+                        .map(FieldError::getDefaultMessage)
+                        .toList();
+                return ResponseEntity.badRequest().body(errorMessages);
+            }
+            return ResponseEntity.ok(user);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    @PutMapping("")
-    public ResponseEntity<?> updateUser(@RequestBody User user){
-        userService.save(user);
-        return ResponseEntity.ok(user);
-    }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserLoginDto userLoginDto){
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id")Long id){
-        userService.deleteById(id);
-        return ResponseEntity.ok(id);
+        return ResponseEntity.ok("Some token");
     }
 }

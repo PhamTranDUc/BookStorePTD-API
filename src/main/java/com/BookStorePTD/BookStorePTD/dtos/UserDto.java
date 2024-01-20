@@ -1,6 +1,5 @@
-package com.BookStorePTD.BookStorePTD.dto;
+package com.BookStorePTD.BookStorePTD.dtos;
 
-import com.BookStorePTD.BookStorePTD.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -42,8 +41,12 @@ public class UserDto {
 
     private String retypePassword;
 
+    private String password;
+
     @JsonProperty("role_id")
     @NotNull(message = "RoleId is required !")
     private Long roleId;
+
+    private String address;
 
 }

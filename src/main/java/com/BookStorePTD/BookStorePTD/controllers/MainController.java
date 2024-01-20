@@ -1,4 +1,4 @@
-package com.BookStorePTD.BookStorePTD.controller;
+package com.BookStorePTD.BookStorePTD.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

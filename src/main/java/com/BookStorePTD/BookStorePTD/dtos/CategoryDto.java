@@ -1,4 +1,4 @@
-package com.BookStorePTD.BookStorePTD.dto;
+package com.BookStorePTD.BookStorePTD.dtos;
 
 import lombok.*;
 

@@ -1,14 +1,14 @@
-package com.BookStorePTD.BookStorePTD.dto;
+package com.BookStorePTD.BookStorePTD.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ProductDto {
 
     private String name;
@@ -16,7 +16,7 @@ public class ProductDto {
     private String thumbnail;
     private String description;
     @JsonProperty("category_id")
-    private int categoryId;
+    private Long categoryId;
 
 
 }

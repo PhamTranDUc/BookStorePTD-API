@@ -41,6 +41,7 @@ public class ProductController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllProduct(@PathParam("page") int page, @PathParam("limit") int limit){
+
         Sort sort= Sort.by("name").ascending();
         Pageable pageable= PageRequest.of(page-1,limit, sort);
         Page<Product> listProduct= productService.getList(pageable) ;

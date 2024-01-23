@@ -39,6 +39,7 @@ public class UserDto {
     @JsonProperty("google_account_id")
     private int googleAccountId;
 
+    @JsonProperty("retype_password")
     private String retypePassword;
 
     private String password;

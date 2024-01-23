@@ -9,8 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserLoginDto {
-    private String email;
+    @JsonProperty("user_name")
+    private String userName;
 
-    @JsonProperty("pass_word")
+    @JsonProperty("password")
     private String password;
 }

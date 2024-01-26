@@ -6,6 +6,8 @@ import com.BookStorePTD.BookStorePTD.models.Product;
 import com.BookStorePTD.BookStorePTD.services.IProductImageService;
 import com.BookStorePTD.BookStorePTD.services.IProductService;
 import com.BookStorePTD.BookStorePTD.services.ProductService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.github.javafaker.Faker;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -39,10 +42,13 @@ public class ProductController {
     @Autowired
     private IProductImageService productImageService;
 
+    @Autowired
+    private Cloudinary cloudinary;
+
     @GetMapping("")
     public ResponseEntity<?> getAllProduct(@PathParam("page") int page, @PathParam("limit") int limit){
 
-        Sort sort= Sort.by("name").ascending();
+        Sort sort= Sort.by("id").ascending();
         Pageable pageable= PageRequest.of(page-1,limit, sort);
         Page<Product> listProduct= productService.getList(pageable) ;
         return ResponseEntity.ok().body(listProduct);
@@ -99,17 +105,27 @@ public class ProductController {
     }
 
     public String uploadImage(Long id,MultipartFile file) throws IOException {
-        String fileName= StringUtils.cleanPath(file.getOriginalFilename());
-        String uniqueFileName= UUID.randomUUID().toString()+"_"+fileName;
-        Path uploadDir= Paths.get("upload");
+//        String fileName= StringUtils.cleanPath(file.getOriginalFilename());
+//        String uniqueFileName= UUID.randomUUID().toString()+"_"+fileName;
 
-        if(!Files.exists(uploadDir)){
-            Files.createDirectories(uploadDir);
+        try{
+            Map r = this.cloudinary.uploader()
+                    .upload(file.getBytes(), ObjectUtils.asMap("resource_type","auto"));
+                    String pathImage= (String) r.get("secure_url");
+                    return productImageService.uploadImage(id,pathImage);
+        }catch (IOException e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        Path destinationFile= Paths.get(uploadDir.toString(),uniqueFileName);
-        Files.copy(file.getInputStream(),destinationFile, StandardCopyOption.REPLACE_EXISTING);
+//        Path uploadDir= Paths.get("upload");
+//
+//        if(!Files.exists(uploadDir)){
+//            Files.createDirectories(uploadDir);
+//        }
+//        Path destinationFile= Paths.get(uploadDir.toString(),uniqueFileName);
+//        Files.copy(file.getInputStream(),destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
-        return productImageService.uploadImage(id,uniqueFileName);
+
     }
 
     @PostMapping("/insertFakeProducts")

@@ -10,6 +10,7 @@ import com.BookStorePTD.BookStorePTD.repositories.RoleRepository;
 import com.BookStorePTD.BookStorePTD.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -66,7 +69,7 @@ public class UserService implements  IUserService{
     }
 
     @Override
-    public String login(String userName, String passWord) throws Exception{
+    public ResponseEntity<?> login(String userName, String passWord) throws Exception{
         Optional<User> optionalUser= userRepository.findByUserName(userName);
         if(optionalUser.isEmpty()){
            throw new DataNotFound("Username of password invalid !!!");
@@ -79,6 +82,8 @@ public class UserService implements  IUserService{
         }
         UsernamePasswordAuthenticationToken authenticationToken= new UsernamePasswordAuthenticationToken(userName,passWord,userExist.getAuthorities());
         authenticationManager.authenticate(authenticationToken);
-        return jwtTokenUtil.generateToken(userExist);
+        Map<String,String> token = new HashMap<>();
+        token.put("token",jwtTokenUtil.generateToken(userExist));
+        return ResponseEntity.ok().body(token);
     }
 }

@@ -23,7 +23,6 @@ public class UserDto {
     @JsonProperty("user_name")
     private String userName;
 
-    @NotBlank(message = "Email is required !")
     private String email;
 
     @JsonProperty("full_name")

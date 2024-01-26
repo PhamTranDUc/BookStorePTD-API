@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController()
 @RequestMapping("/api/v1/users")
@@ -37,10 +38,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginDto userLoginDto) throws Exception{
-
-        String token=userService.login(userLoginDto.getUserName(),userLoginDto.getPassword());
-
-        return ResponseEntity.ok(token);
+    public ResponseEntity<?> login(@RequestBody UserLoginDto userLoginDto) throws Exception{
+//       ResponseEntity<?> token=
+        return userService.login(userLoginDto.getUserName(),userLoginDto.getPassword());
     }
 }

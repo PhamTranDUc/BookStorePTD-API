@@ -30,7 +30,7 @@ public class Order {
     @Column(name="phone_number", nullable = false, length = 20)
     private String phoneNumber;
 
-    @Column(name="address", length = 200,nullable = false)
+    @Column(name="address", length = 200)
     private String address;
 
     private String note;
@@ -47,7 +47,7 @@ public class Order {
     @Column(name="shipping_method",length = 100)
     private String shippingMethod;
 
-    @Column(name="shipping_address", length = 200)
+    @Column(name="shipping_address", length = 200, nullable = false)
     private String shippingAddress;
 
     @Column(name="shipping_date")

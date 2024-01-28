@@ -106,4 +106,6 @@ CREATE TABLE product_images (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
     image_url VARCHAR(300)
 );
+ALTER TABLE `book_store_angular`.`orders`
+CHANGE COLUMN `shipping_address` `shipping_address` VARCHAR(200) NOT NULL ;
 

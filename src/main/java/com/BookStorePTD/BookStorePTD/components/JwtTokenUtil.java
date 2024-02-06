@@ -24,6 +24,7 @@ public class JwtTokenUtil {
     public String generateToken(User user) throws  Exception{
         Map<String,Object> claims = new HashMap<>();
         claims.put("userName",user.getUsername());
+        claims.put("role",user.getRole().getName());
         try {
             String token= Jwts.builder()
                     .setClaims(claims)
@@ -71,6 +72,9 @@ public class JwtTokenUtil {
         return extractClaim(token,Claims:: getSubject);
     }
 
+    public String extractRoleName(String token){
+        return extractClaim(token, claims -> claims.get("role", String.class));
+    }
     public boolean validateToken(String token, UserDetails userDetails){
         String userName= extractUsername(token);
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);

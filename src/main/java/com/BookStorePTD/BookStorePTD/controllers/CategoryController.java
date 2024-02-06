@@ -17,7 +17,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
     @GetMapping("")
-    public ResponseEntity<?> getAllCategories(@PathParam("page") long page, @PathParam("limit") long limit){
+    public ResponseEntity<?> getAllCategories(){
         List<Category> categories= categoryService.getAllCategories();
         return ResponseEntity.ok().body(categories);
     }

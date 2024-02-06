@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 @Service
 public class ProductService implements IProductService{
     @Autowired
@@ -25,6 +27,7 @@ public class ProductService implements IProductService{
 
     @Autowired
     private ProductImageRepository productImageRepository;
+
 
     @Override
     public Product create(ProductDto productDto) {
@@ -70,6 +73,11 @@ public class ProductService implements IProductService{
 
     }
 
+    @Override
+    public Product update(Product product) {
+        return productRepository.save(product);
+    }
+
 
     @Override
     public String deleteById(Long id) {
@@ -106,6 +114,16 @@ public class ProductService implements IProductService{
     @Override
     public boolean checkProductExistByName(String name) {
         return productRepository.existsByName(name);
+    }
+
+    @Override
+    public List<ProductImage> getAllProductImages(Long id) {
+        return productImageRepository.findByProduct(id);
+    }
+
+    @Override
+    public List<Product> getProductByListId(List<Long> ids) {
+        return productRepository.getByListId(ids);
     }
 
 

@@ -2,14 +2,15 @@ package com.BookStorePTD.BookStorePTD.services;
 
 import com.BookStorePTD.BookStorePTD.dtos.OrderDetailDto;
 import com.BookStorePTD.BookStorePTD.models.OrderDetail;
+import com.BookStorePTD.BookStorePTD.responses.OrderDetailResponse;
 
 import java.util.List;
 
-public interface IOrderDetail {
-     List<OrderDetail> getAllByOrderId();
+public interface IOrderDetailService {
+     List<OrderDetailResponse> getAllByOrderId();
 
      OrderDetail getById(Long id);
-     OrderDetail create(OrderDetailDto orderDetailDto);
-     OrderDetail update(Long id,OrderDetailDto orderDetailDto);
+     OrderDetailResponse create(OrderDetailDto orderDetailDto);
+    OrderDetailResponse update(Long id,OrderDetailDto orderDetailDto);
       String delete(Long id);
 }

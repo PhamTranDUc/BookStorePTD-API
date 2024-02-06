@@ -16,6 +16,7 @@ public class ProductImageService implements IProductImageService{
     private ProductImageRepository productImageRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired IProductService productService;
     @Override
     public String uploadImage(Long id, String nameImage) {
         Product product= productRepository.findById(id).orElseThrow(()-> new DataNotFound("Not found Product with id = "+id));
@@ -23,6 +24,6 @@ public class ProductImageService implements IProductImageService{
                         .product(product)
                         .imageUrl(nameImage)
                         .build());
-        return "Upload Image for Product id = "+id+" success !!!";
+        return nameImage;
     }
 }

@@ -1,7 +1,10 @@
 package com.BookStorePTD.BookStorePTD.controllers;
 
 import com.BookStorePTD.BookStorePTD.dtos.OrderDetailDto;
+import com.BookStorePTD.BookStorePTD.services.IOrderDetailService;
+import com.BookStorePTD.BookStorePTD.services.OrderDetailService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -13,6 +16,8 @@ import java.util.List;
 @RequestMapping("/api/v1/order_details")
 public class OrderDetailController {
 
+    @Autowired
+    private IOrderDetailService orderDetailService;
     @PostMapping("")
     public ResponseEntity createOrderDetail(@Valid @RequestBody OrderDetailDto orderDetailDto, BindingResult result){
         try {
@@ -20,7 +25,7 @@ public class OrderDetailController {
                 List<String> listErrors= result.getFieldErrors().stream().map(FieldError :: getDefaultMessage).toList();
                 return ResponseEntity.badRequest().body(listErrors);
             }
-            return ResponseEntity.ok(orderDetailDto);
+            return ResponseEntity.ok(orderDetailService.create(orderDetailDto));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
 
@@ -30,7 +35,7 @@ public class OrderDetailController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderDetail(@Valid @PathVariable("id") Long id){
         try{
-            return ResponseEntity.ok().body("Order Detail Have id = "+ id);
+            return ResponseEntity.ok().body(orderDetailService.getById(id));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -48,7 +53,7 @@ public class OrderDetailController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrderDetails(@Valid @PathVariable("id") Long id, @Valid @RequestBody OrderDetailDto orderDetailDto){
         try{
-            return ResponseEntity.ok().body(orderDetailDto);
+            return ResponseEntity.ok().body(orderDetailService.update(id,orderDetailDto));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -57,7 +62,7 @@ public class OrderDetailController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteOrderDetail(@PathVariable("id") Long id){
         try {
-            return ResponseEntity.ok("Delete success order detail with id = "+id);
+            return ResponseEntity.ok(orderDetailService.delete(id));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

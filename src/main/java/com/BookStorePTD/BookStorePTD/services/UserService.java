@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -85,5 +86,29 @@ public class UserService implements  IUserService{
         Map<String,String> token = new HashMap<>();
         token.put("token",jwtTokenUtil.generateToken(userExist));
         return ResponseEntity.ok().body(token);
+    }
+
+    @Override
+    public String getRoleByToken(String token) {
+        token= token.substring(7);
+        return jwtTokenUtil.extractRoleName(token);
+    }
+
+    @Override
+    public User getUserByToken(String token) {
+        if(jwtTokenUtil.isTokenExpired(token)){
+            throw new RuntimeException("token is Expired");
+        }
+        String userName= jwtTokenUtil.extractUsername(token);
+        Optional<User> user= userRepository.findByUserName(userName);
+        if(user.isPresent()){
+            return user.get();
+        }
+        throw new DataNotFound("Not Found User with UserName = "+userName);
+    }
+
+    @Override
+    public List<User> getAllAccount() {
+        return userRepository.findAll();
     }
 }

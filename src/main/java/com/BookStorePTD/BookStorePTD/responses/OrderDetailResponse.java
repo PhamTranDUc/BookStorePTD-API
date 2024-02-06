@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class OderDetailResponse {
+public class OrderDetailResponse {
 
     private Long productId;
     private Long oderId;
@@ -20,9 +20,9 @@ public class OderDetailResponse {
 
     private float totalMoney;
 
-    public static OderDetailResponse convertToResponse(OrderDetail orderDetail){
+    public static OrderDetailResponse convertToResponse(OrderDetail orderDetail){
 
-        return OderDetailResponse.builder().oderId(orderDetail.getOrder().getId())
+        return OrderDetailResponse.builder().oderId(orderDetail.getOrder().getId())
                 .productId(orderDetail.getProduct().getId())
                 .price(orderDetail.getPrice())
                 .numberOfProduct(orderDetail.getNumberOfProduct())

@@ -32,7 +32,9 @@ public class ProductResponse {
 
     private String description;
 
+    private Long categoryId;
     private List<ProductImage> productImages;
+    private Category category;
 
     public static ProductResponse productToProductResponse(Product product, IProductService productService){
         List<ProductImage> listImage= productService.getAllProductImages(product.getId());
@@ -43,6 +45,8 @@ public class ProductResponse {
                 .thumbnail(product.getThumbnail())
                 .description(product.getDescription())
                 .productImages(listImage)
+                .categoryId(product.getCategory().getId())
+                .category(product.getCategory())
                 .build();
     }
 

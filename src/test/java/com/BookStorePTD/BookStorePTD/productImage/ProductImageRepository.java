@@ -27,4 +27,14 @@ public class ProductImageRepository {
         }
         System.out.println(size);
     }
+
+    @Test
+    public void deleteImageByUrl(){
+        productImageRepository.deleteImageByUrl("https://res.cloudinary.com/dmedbpuv3/image/upload/v1708007102/fdd43dobnd5rjrialcqx.jpg");
+    }
+
+    @Test
+    public void deleteAllImageByProductId(){
+        productImageRepository.deleteAllImageByProductId(201L);
+    }
 }

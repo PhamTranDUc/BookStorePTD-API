@@ -8,11 +8,11 @@
 		<version>3.2.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ShopBookPTD</groupId>
-	<artifactId>ShopBookPTD</artifactId>
+	<groupId>com.ShopComputerPTD</groupId>
+	<artifactId>ShopComputerPTD</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ShopBookPTD</name>
-	<description>ShopBookPTD - API</description>
+	<name>ShopComputerPTD</name>
+	<description>ShopComputerPTD - API</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -127,6 +127,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>
 
+	</build>
 </project>
